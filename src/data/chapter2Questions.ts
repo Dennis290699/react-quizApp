@@ -1,11 +1,11 @@
 import { QuizCategory } from '../types/quiz';
 
-export const networkOSQuestions: QuizCategory = {
+export const chapter2Questions: QuizCategory = {
   id: 'network-os',
   title: 'Chapter 2',
   description: 'Test your knowledge of configuring and managing network operating systems.',
   icon: 'Network',
-  color: 'blue',
+  color: 'indigo',
   questions: [
     {
       id: 'netos1',
@@ -149,7 +149,7 @@ export const networkOSQuestions: QuizCategory = {
         'Muy entusiasta',
         'Completamente entusiasta'
       ],
-      correctAnswer: 2, // Opción predeterminada, puedes cambiarla según tu necesidad
+      correctAnswer: 2,
       explanation: 'Esta pregunta es una autoevaluación sobre tu entusiasmo y percepción del curso.', 
       type: "single"
     },
@@ -163,7 +163,7 @@ export const networkOSQuestions: QuizCategory = {
         'Muy interesado',
         'Completamente interesado'
       ],
-      correctAnswer: 2, // Opción predeterminada, puedes cambiarla según tu necesidad
+      correctAnswer: 2,
       explanation: 'Esta pregunta es una autoevaluación sobre tu interés en el curso.', 
       type: "single"
     },
