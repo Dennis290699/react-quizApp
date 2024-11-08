@@ -4,6 +4,5 @@ import { chapter3Questions } from './chapter3Questions';
 
 export const categories = [
   chapter1Questions,
-  chapter2Questions,
-  chapter3Questions,
+  chapter2Questions
 ];
