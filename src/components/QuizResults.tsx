@@ -3,16 +3,33 @@ import { Trophy, RefreshCw, Home, ClipboardList } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useQuizStore } from '../store/quizStore';
 import { useState } from 'react';
-import { QuizReview } from './QuizReview'; // Importa el nuevo componente
+import { QuizReview } from './QuizReview';
+import { motivationalMessages } from '../data/motivationalMessages';
 
 export const QuizResults = () => {
   const navigate = useNavigate();
-  const { score, questions, answers, resetQuiz } = useQuizStore();
+  const { score, questions, resetQuiz, clearAnswers } = useQuizStore();
   const [showReview, setShowReview] = useState(false);
   const percentage = (score / questions.length) * 100;
 
+  const motivationalMessage = motivationalMessages.find(
+    (msg) => percentage >= msg.minScore && percentage <= msg.maxScore
+  )?.message;
+
+  const handleReset = () => {
+    resetQuiz();
+  };
+
+  const handleHomeClick = () => {
+    clearAnswers();
+    navigate('/');
+  };
+
   if (showReview) {
-    return <QuizReview />; // Renderiza el componente de revisión
+    return <QuizReview onFinish={() => {
+      clearAnswers();
+      navigate('/');
+    }} />;
   }
 
   return (
@@ -36,12 +53,16 @@ export const QuizResults = () => {
         {questions.length} ({percentage.toFixed(1)}%)
       </p>
 
+      {motivationalMessage && (
+        <p className="text-lg font-medium text-gray-700 mb-8">{motivationalMessage}</p>
+      )}
+
       <div className="space-y-4">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg"
-          onClick={resetQuiz}
+          onClick={handleReset}
         >
           <RefreshCw className="w-5 h-5 mr-2" />
           Try Again
@@ -51,7 +72,7 @@ export const QuizResults = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg"
-          onClick={() => setShowReview(true)} // Cambia el estado para mostrar la revisión
+          onClick={() => setShowReview(true)}
         >
           <ClipboardList className="w-5 h-5 mr-2" />
           Review Answers
@@ -61,7 +82,7 @@ export const QuizResults = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full inline-flex items-center justify-center px-6 py-3 bg-gray-600 text-white rounded-lg"
-          onClick={() => navigate('/')}
+          onClick={handleHomeClick}
         >
           <Home className="w-5 h-5 mr-2" />
           Back to Menu

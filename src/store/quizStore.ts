@@ -7,6 +7,7 @@ interface QuizState {
   answers: (number | number[])[];
   mode: 'practice' | 'exam';
   questions: QuizQuestion[];
+  originalQuestions: QuizQuestion[];
   isComplete: boolean;
 }
 
@@ -15,7 +16,17 @@ interface QuizStore extends QuizState {
   answerQuestion: (answerIndex: number | number[]) => void;
   nextQuestion: () => void;
   resetQuiz: () => void;
+  clearAnswers: () => void;
 }
+
+const shuffleQuestions = (questions: QuizQuestion[]): QuizQuestion[] => {
+  return [...questions].sort(() => Math.random() - 0.5);
+};
+
+const getExamQuestions = (questions: QuizQuestion[]): QuizQuestion[] => {
+  const shuffled = shuffleQuestions(questions);
+  return shuffled.slice(0, 20); // Take first 20 questions for exam mode
+};
 
 export const useQuizStore = create<QuizStore>((set) => ({
   currentQuestion: 0,
@@ -23,14 +34,17 @@ export const useQuizStore = create<QuizStore>((set) => ({
   answers: [],
   mode: 'practice',
   questions: [],
+  originalQuestions: [],
   isComplete: false,
 
   initializeQuiz: (questions, mode) => {
-    const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    const selectedQuestions = mode === 'exam' ? shuffled.slice(0, 20) : questions;
+    const selectedQuestions = mode === 'exam' 
+      ? getExamQuestions(questions)
+      : [...questions];
     
     set({
       questions: selectedQuestions,
+      originalQuestions: questions,
       mode,
       currentQuestion: 0,
       score: 0,
@@ -45,7 +59,6 @@ export const useQuizStore = create<QuizStore>((set) => ({
       let isCorrect = false;
 
       if (question.type === 'multiple' && Array.isArray(answerIndex)) {
-        // Verifica si todas las respuestas correctas están seleccionadas
         const correctAnswers = question.correctAnswer as number[];
         isCorrect = correctAnswers.every((answer) => answerIndex.includes(answer)) &&
                     correctAnswers.length === answerIndex.length;
@@ -53,9 +66,12 @@ export const useQuizStore = create<QuizStore>((set) => ({
         isCorrect = question.correctAnswer === answerIndex;
       }
 
+      const newAnswers = [...state.answers];
+      newAnswers[state.currentQuestion] = answerIndex;
+
       return {
         score: isCorrect ? state.score + 1 : state.score,
-        answers: [...state.answers, answerIndex],
+        answers: newAnswers,
       };
     });
   },
@@ -70,12 +86,27 @@ export const useQuizStore = create<QuizStore>((set) => ({
     });
   },
 
-  resetQuiz: () => {
+  clearAnswers: () => {
     set({
-      currentQuestion: 0,
-      score: 0,
       answers: [],
+      score: 0,
       isComplete: false,
+    });
+  },
+
+  resetQuiz: () => {
+    set((state) => {
+      const newQuestions = state.mode === 'exam' 
+        ? getExamQuestions(state.originalQuestions)
+        : [...state.originalQuestions];
+
+      return {
+        currentQuestion: 0,
+        score: 0,
+        answers: [],
+        isComplete: false,
+        questions: newQuestions,
+      };
     });
   },
 }));

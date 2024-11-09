@@ -1,10 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ChevronLeft } from 'lucide-react';
 import { useQuizStore } from '../store/quizStore';
-import { useNavigate } from 'react-router-dom';
 
-export const QuizReview = () => {
-  const navigate = useNavigate();
+interface QuizReviewProps {
+  onFinish: () => void;
+}
+
+export const QuizReview = ({ onFinish }: QuizReviewProps) => {
   const { questions, answers } = useQuizStore();
 
   return (
@@ -68,29 +70,40 @@ export const QuizReview = () => {
                     ? userAnswer.includes(optionIndex)
                     : userAnswer === optionIndex;
 
+                  let optionClass = 'p-4 rounded-lg transition-all duration-300 ';
+                  
+                  if (isOptionSelected && isOptionCorrect) {
+                    optionClass += 'bg-green-100 border-2 border-green-500';
+                  } else if (isOptionSelected && !isOptionCorrect) {
+                    optionClass += 'bg-red-100 border-2 border-red-500';
+                  } else if (isOptionCorrect) {
+                    optionClass += 'bg-green-50 border-2 border-green-500';
+                  } else {
+                    optionClass += 'bg-gray-50 hover:bg-gray-100';
+                  }
+
                   return (
                     <motion.div
                       key={optionIndex}
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: index * 0.1 + optionIndex * 0.05 }}
-                      className={`p-4 rounded-lg transition-all duration-300 ${
-                        isOptionCorrect
-                          ? 'bg-green-100 border-2 border-green-500'
-                          : isOptionSelected
-                          ? 'bg-red-100 border-2 border-red-500'
-                          : 'bg-gray-50 hover:bg-gray-100'
-                      }`}
+                      className={optionClass}
                     >
                       {option}
-                      {isOptionCorrect && (
+                      {isOptionSelected && isOptionCorrect && (
                         <span className="ml-2 text-green-600 text-sm font-medium">
-                          (Correct Answer)
+                          (Your Correct Answer)
                         </span>
                       )}
                       {isOptionSelected && !isOptionCorrect && (
                         <span className="ml-2 text-red-600 text-sm font-medium">
-                          (Your Answer)
+                          (Your Incorrect Answer)
+                        </span>
+                      )}
+                      {!isOptionSelected && isOptionCorrect && (
+                        <span className="ml-2 text-green-600 text-sm font-medium">
+                          (Correct Answer)
                         </span>
                       )}
                     </motion.div>
@@ -120,7 +133,7 @@ export const QuizReview = () => {
         className="mt-8"
       >
         <button
-          onClick={() => navigate(-1)}
+          onClick={onFinish}
           className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
         >
           <ChevronLeft className="w-5 h-5 mr-2" />
