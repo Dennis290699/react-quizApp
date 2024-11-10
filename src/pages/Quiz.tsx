@@ -27,7 +27,7 @@ export const Quiz = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50 py-12 px-4"
+      className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4"
     >
       {isComplete ? <QuizResults /> : <QuizQuestion />}
     </motion.div>

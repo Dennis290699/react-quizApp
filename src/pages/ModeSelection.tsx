@@ -35,14 +35,14 @@ export const ModeSelection = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-4xl mx-auto">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/')}
-          className="mb-8 inline-flex items-center text-gray-600 hover:text-gray-900"
+          className="mb-8 inline-flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back to Categories
@@ -52,11 +52,11 @@ export const ModeSelection = () => {
           <motion.h1 
             initial={{ y: -20 }}
             animate={{ y: 0 }}
-            className="text-4xl font-bold text-gray-900 mb-4"
+            className="text-4xl font-bold text-gray-900 dark:text-white mb-4"
           >
             Select Your Mode
           </motion.h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
             Choose how you want to practice {category.title}
           </p>
         </div>
@@ -73,13 +73,17 @@ export const ModeSelection = () => {
                 whileHover={{ scale: 1.03, y: -5 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate(`/quiz/${category.id}/${mode.id}`)}
-                className={`bg-white rounded-xl shadow-lg p-8 cursor-pointer border-2 border-transparent hover:border-${mode.color}-500 transition-colors duration-300`}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-colors duration-300"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-${mode.color}-100 p-4 mb-6`}>
-                  <Icon className={`w-full h-full text-${mode.color}-600`} />
+                <div className="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-900 p-4 mb-6">
+                  <Icon className="w-full h-full text-indigo-600 dark:text-indigo-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">{mode.title}</h3>
-                <p className="text-gray-600">{mode.description}</p>
+                <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
+                  {mode.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {mode.description}
+                </p>
               </motion.div>
             );
           })}

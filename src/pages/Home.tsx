@@ -30,7 +30,7 @@ export const Home = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
@@ -38,11 +38,11 @@ export const Home = () => {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-12"
         >
-          <Brain className="w-16 h-16 mx-auto text-indigo-600 mb-4" />
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <Brain className="w-16 h-16 mx-auto text-indigo-600 dark:text-indigo-400 mb-4" />
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Master Your Knowledge
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 dark:text-gray-300">
             Choose a category and test your skills
           </p>
         </motion.div>
