@@ -7,6 +7,6 @@ export const chapter3Questions: QuizCategory = {
   icon: 'Waypoints',
   color: 'indigo',
   questions: [
-                     
+                   
   ]
 };
