@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { categories } from '../data/categories';
+import { PreLoader } from '../components/PreLoader'; // Importa el PreLoader
 
 export const ModeSelection = () => {
+  const [isLoading, setIsLoading] = useState(false); // Estado de carga
   const navigate = useNavigate();
   const { categoryId } = useParams();
   const category = categories.find((c) => c.id === categoryId);
@@ -30,6 +33,13 @@ export const ModeSelection = () => {
     },
   ];
 
+  const handleModeSelection = (modeId: string) => {
+    setIsLoading(true); // Mostrar el PreLoader
+    setTimeout(() => {
+      navigate(`/quiz/${category.id}/${modeId}`);
+    }, 1500); // Tiempo de carga simulado de 1.5 segundos
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -37,6 +47,8 @@ export const ModeSelection = () => {
       exit={{ opacity: 0 }}
       className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8"
     >
+      {isLoading && <PreLoader />} {/* Renderiza el PreLoader si isLoading es true */}
+      
       <div className="max-w-4xl mx-auto">
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -72,7 +84,7 @@ export const ModeSelection = () => {
                 transition={{ delay: index * 0.2 }}
                 whileHover={{ scale: 1.03, y: -5 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => navigate(`/quiz/${category.id}/${mode.id}`)}
+                onClick={() => handleModeSelection(mode.id)} // Llama a la función de selección
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-colors duration-300"
               >
                 <div className="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-900 p-4 mb-6">

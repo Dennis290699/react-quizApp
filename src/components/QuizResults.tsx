@@ -5,11 +5,13 @@ import { useQuizStore } from '../store/quizStore';
 import { useState } from 'react';
 import { QuizReview } from './QuizReview';
 import { motivationalMessages } from '../data/motivationalMessages';
+import { PreLoader } from './PreLoader'; // Importa el PreLoader
 
 export const QuizResults = () => {
   const navigate = useNavigate();
   const { score, questions, resetQuiz, clearAnswers } = useQuizStore();
   const [showReview, setShowReview] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Estado de carga
   const percentage = (score / questions.length) * 100;
 
   const motivationalMessage = motivationalMessages.find(
@@ -17,7 +19,11 @@ export const QuizResults = () => {
   )?.message;
 
   const handleReset = () => {
-    resetQuiz();
+    setIsLoading(true); // Mostrar el PreLoader
+    setTimeout(() => {
+      resetQuiz();
+      setIsLoading(false); // Ocultar el PreLoader
+    }, 1500); // Tiempo de carga simulado de 1.5 segundos
   };
 
   const handleHomeClick = () => {
@@ -38,6 +44,8 @@ export const QuizResults = () => {
       animate={{ scale: 1, opacity: 1 }}
       className="max-w-md mx-auto text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl"
     >
+      {isLoading && <PreLoader />} {/* Renderiza el PreLoader si isLoading es true */}
+
       <motion.div
         initial={{ rotate: 0 }}
         animate={{ rotate: 360 }}
