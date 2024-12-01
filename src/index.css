@@ -14,15 +14,6 @@
   }
 }
 
-/* Christmas Theme */
-.christmas-gradient {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 0.1) 0%,
-    rgba(0, 128, 0, 0.1) 100%
-  );
-}
-
 /* Animations */
 .fade-enter {
   opacity: 0;
@@ -37,17 +28,4 @@
 .fade-exit-active {
   opacity: 0;
   transition: opacity 200ms ease-in;
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-.twinkle {
-  animation: twinkle 2s ease-in-out infinite;
 }
