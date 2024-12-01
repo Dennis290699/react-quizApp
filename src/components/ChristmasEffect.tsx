@@ -1,40 +1,42 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+'use client'
+
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
 interface Snowflake {
-  id: number;
-  x: number;
-  delay: number;
-  size: number;
-  duration: number;
+  id: number
+  x: number
+  size: number
+  delay: number
+  duration: number
 }
 
-export const ChristmasEffect = () => {
-  const [snowflakes, setSnowflakes] = useState<Snowflake[]>([]);
+export function ChristmasEffect() {
+  const [snowflakes, setSnowflakes] = useState<Snowflake[]>([])
 
   useEffect(() => {
-    const flakes = Array.from({ length: 25 }, (_, i) => ({
+    const flakes = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
+      size: Math.random() * 4 + 2, // Tamaño entre 2px y 6px
       delay: Math.random() * 5,
-      size: Math.random() * 10 + 5,
       duration: Math.random() * 10 + 10
-    }));
-    setSnowflakes(flakes);
-  }, []);
+    }))
+    setSnowflakes(flakes)
+  }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50">
+    <div className="fixed inset-0 pointer-events-none z-50" aria-hidden="true">
       {snowflakes.map((flake) => (
         <motion.div
           key={flake.id}
-          className="absolute text-white dark:text-gray-200 opacity-70"
+          className="absolute rounded-full bg-gray-300 dark:bg-white"
           initial={{ y: -20, x: `${flake.x}vw` }}
           animate={{
             y: '100vh',
             x: [
               `${flake.x}vw`,
-              `${flake.x + Math.sin(flake.id) * 10}vw`,
+              `${flake.x + Math.sin(flake.id) * 2}vw`,
               `${flake.x}vw`
             ]
           }}
@@ -52,12 +54,12 @@ export const ChristmasEffect = () => {
           }}
           style={{
             width: flake.size,
-            height: flake.size
+            height: flake.size,
+            boxShadow: `0 0 ${flake.size}px ${flake.size / 2}px rgba(0, 0, 0, 0.1), 0 0 ${flake.size * 2}px ${flake.size}px rgba(255, 255, 255, 0.1)`,
+            filter: 'blur(0.5px)'
           }}
-        >
-          ❄
-        </motion.div>
+        />
       ))}
     </div>
-  );
-};
+  )
+}
