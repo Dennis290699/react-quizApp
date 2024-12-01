@@ -4,11 +4,13 @@ import { Home } from './pages/Home';
 import { ModeSelection } from './pages/ModeSelection';
 import { Quiz } from './pages/Quiz';
 import { ThemeToggle } from './components/ThemeToggle';
+import { ChristmasEffect } from './components/ChristmasEffect';
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <ChristmasEffect />
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Home />} />
