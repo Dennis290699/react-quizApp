@@ -1097,7 +1097,7 @@ export const chapterIA: QuizCategory = {
                 "Doblar la profundidad accesible en juegos como el ajedrez.",
                 "Reducir el tiempo necesario para calcular los nodos terminales."
             ],
-            correctAnswer: 1,
+            correctAnswer: 2,
             explanation: "La tabla de transposición ayuda a evitar almacenar posiciones repetidas durante la búsqueda, lo que mejora la eficiencia de la búsqueda al reducir los cálculos redundantes.",
             type: "single"
         },
