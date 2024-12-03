@@ -2,7 +2,7 @@ import { QuizCategory } from '../types/quiz';
 
 export const chapterIA: QuizCategory = {
     id: 'IA',
-    title: 'Partial Quiz',
+    title: 'Full Quiz',
     description: 'Test your knowledge of the basic concepts of artificial intelligence.',
     icon: 'brain-circuit',
     color: 'indigo',
