@@ -1,42 +1,10 @@
-import { useEffect, useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
-
-interface Snowflake {
-  id: number
-  x: number
-  size: number
-  delay: number
-  duration: number
-}
+import { motion } from 'framer-motion';
+import { useSnowflakes } from '../hooks/useSnowflakes';
 
 export function ChristmasEffect() {
-  const [snowflakes, setSnowflakes] = useState<Snowflake[]>([])
-  const [isLowPerfDevice, setIsLowPerfDevice] = useState(false)
+  const { snowflakes, isLowPerfDevice, isMounted } = useSnowflakes();
 
-  const createSnowflakes = useCallback(() => {
-    const flakeCount = isLowPerfDevice ? 20 : 40
-    return Array.from({ length: flakeCount }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      size: Math.random() * 3 + 2, // Tamaño entre 2px y 5px
-      delay: Math.random() * 5,
-      duration: Math.random() * 7 + 10
-    }))
-  }, [isLowPerfDevice])
-
-  useEffect(() => {
-    // Detectar dispositivos de bajo rendimiento
-    const checkPerformance = () => {
-      const isLowPerf = window.navigator.hardwareConcurrency <= 4 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-      setIsLowPerfDevice(isLowPerf)
-    }
-
-    checkPerformance()
-    setSnowflakes(createSnowflakes())
-
-    window.addEventListener('resize', checkPerformance)
-    return () => window.removeEventListener('resize', checkPerformance)
-  }, [createSnowflakes])
+  if (!isMounted) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50" aria-hidden="true">
@@ -76,5 +44,5 @@ export function ChristmasEffect() {
         />
       ))}
     </div>
-  )
+  );
 }
