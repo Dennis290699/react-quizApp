@@ -82,7 +82,7 @@ export const chapter6Questions: QuizCategory = {
                 "Direcciones IP de origen y destino de menor tamaño",
                 "Manejo eficiente de paquetes"
             ],
-            correctAnswer: 1,
+            correctAnswer: 3,
             explanation: "El encabezado simplificado de IPv6 ofrece varias ventajas sobre IPv4:\n· Mejor eficiencia de enrutamiento y manejo eficiente de paquetes para el rendimiento y la escalabilidad de la tasa de reenvío.\n· No se requiere procesar sumas de verificación.\n· Mecanismos de encabezado de extensión simplificados y más eficientes (a diferencia del campo Opciones de IPv4).\n· Un campo de Etiqueta de Flujo (Flow Label) para el procesamiento por flujo sin necesidad de abrir el paquete de transporte interno para identificar los diferentes flujos de tráfico.",
             type: "single"
         },
@@ -109,7 +109,7 @@ export const chapter6Questions: QuizCategory = {
                 "Serial0/0/0",
                 "Serial0/0/1"
             ],
-            correctAnswer: 2,
+            correctAnswer: 3,
             explanation: "Si una ruta en la tabla de enrutamiento apunta a una dirección de próximo salto, el router realizará una segunda búsqueda para determinar por qué interfaz se encuentra el próximo salto.",
             image: "/images/Capitulo6/q8.png",
             type: "single"
@@ -322,7 +322,7 @@ export const chapter6Questions: QuizCategory = {
                 "Buscan en su propia tabla de enrutamiento local una ruta hacia la dirección de destino de la red y pasan esta información a la puerta de enlace predeterminada.",
                 "Envían un paquete de consulta a la puerta de enlace predeterminada solicitando la mejor ruta."
             ],
-            correctAnswer: 1,
+            correctAnswer: 0,
             explanation: "Los hosts deben mantener su propia tabla de enrutamiento local para asegurarse de que los paquetes de la capa de red sean dirigidos a la red de destino correcta. Esta tabla local generalmente contiene una ruta hacia la interfaz de loopback, una ruta hacia la red a la que está conectado el host, y una ruta predeterminada local, que representa la ruta que los paquetes deben seguir para llegar a todas las direcciones de red remotas.",
             type: "single"
         },
@@ -363,7 +363,7 @@ export const chapter6Questions: QuizCategory = {
                 "Caché ARP",
                 "Configuración de inicio"
             ],
-            correctAnswer: [1, 4],
+            correctAnswer: [1, 3],
             explanation: "Si el técnico no guarda la configuración antes de que se apague el router, la tabla de enrutamiento y la caché ARP se perderán. Estos datos se almacenan en la memoria volátil (RAM) y no en la memoria no volátil.",
             type: "multiple"
         },
@@ -377,7 +377,7 @@ export const chapter6Questions: QuizCategory = {
                 "Interfaces de consola",
                 "Interfaces USB"
             ],
-            correctAnswer: [3, 0],
+            correctAnswer: [1, 2],
             explanation: "Las interfaces de consola y las interfaces auxiliares permiten el acceso a través de las líneas VTY para la configuración del router.",
             type: "multiple"
         },
