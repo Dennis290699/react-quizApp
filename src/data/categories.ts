@@ -1,13 +1,13 @@
-import { capitulo2 } from './capitulo2';
-import { capitulo3 } from './capitulo3';
-import { capitulo4 } from './capitulo4';
-import { capitulo6 } from './capitulo6';
-import { chapterIA } from './chapterIA';
+import { FinalAIPart4 } from './FinalAIPart4';
+import { FinalAIPart3 } from './FinalAIPart3';
+import { FinalAIPart2 } from './FinalAIPart2';
+import { FinalAIPart1 } from './FinalAIPart1';
+import { PruebaFinalIA } from './PruebaFinalIA';
 
 export const categories = [
-  chapterIA,
-  capitulo2,
-  capitulo3,
-  capitulo4,
-  capitulo6
+  PruebaFinalIA,
+  FinalAIPart1,
+  FinalAIPart2,
+  FinalAIPart3,
+  FinalAIPart4
 ];
