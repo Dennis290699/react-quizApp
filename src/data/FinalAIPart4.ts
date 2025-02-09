@@ -1,8 +1,8 @@
 import { QuizCategory } from '../types/quiz';
 
 export const FinalAIPart4: QuizCategory = {
-    id: 'Final-AI-Part2',
-    title: 'Final AI Quiz - Part 2',
+    id: 'Final-AI-Part4',
+    title: 'Final AI Quiz - Part 4',
     description: 'Primera parte del cuestionario final de Inteligencia Artificial',
     icon: 'BrainCircuit',
     color: 'indigo',
