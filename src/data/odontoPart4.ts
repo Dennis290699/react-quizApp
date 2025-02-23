@@ -63,7 +63,7 @@ export const odontoPart4: QuizCategory = {
                 "Cualquier material biológico de origen humano susceptible de conservación.",
                 "Decisión de participar en una investigación adoptada libre y voluntariamente por una persona"
             ],
-            correctAnswer: 2,
+            correctAnswer: 1,
             explanation: "Cualquier material biológico de origen humano susceptible de conservación.",
             type: "single",
         },

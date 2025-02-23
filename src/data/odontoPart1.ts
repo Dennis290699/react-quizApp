@@ -207,7 +207,7 @@ export const odontoPart1: QuizCategory = {
                 "Proceso cognitivo que se basa en la experiencia personal, la intuición y la creencia",
                 "Proceso cognitivo que se basa en la experiencia cotidiana, la tradición y la opinión pública."
             ],
-            correctAnswer: 2,
+            correctAnswer: 0,
             explanation: "Proceso cognitivo que se basa en la experiencia cotidiana, la tradición y la opinión pública.",
             type: "single",
         },
@@ -279,7 +279,7 @@ export const odontoPart1: QuizCategory = {
                 "76 horas",
                 "72 horas"
             ],
-            correctAnswer: 2,
+            correctAnswer: 0,
             explanation: "Un estudio ex vivo debe llevarse a cabo dentro de las 72 horas.",
             type: "single",
         },

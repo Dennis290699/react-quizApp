@@ -255,7 +255,7 @@ export const odontoPart2: QuizCategory = {
                 "Investigación de comportamientos humanos.",
                 "Describir distribución de enfermedades"
             ],
-            correctAnswer: 2,
+            correctAnswer: 1,
             explanation: "Describir distribución de enfermedades.",
             type: "single",
         },

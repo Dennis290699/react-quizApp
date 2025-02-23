@@ -207,7 +207,7 @@ export const odontoTotal: QuizCategory = {
                 "Proceso cognitivo que se basa en la experiencia personal, la intuición y la creencia",
                 "Proceso cognitivo que se basa en la experiencia cotidiana, la tradición y la opinión pública."
             ],
-            correctAnswer: 2,
+            correctAnswer: 0,
             explanation: "Proceso cognitivo que se basa en la experiencia cotidiana, la tradición y la opinión pública.",
             type: "single",
         },
@@ -279,7 +279,7 @@ export const odontoTotal: QuizCategory = {
                 "76 horas",
                 "72 horas"
             ],
-            correctAnswer: 2,
+            correctAnswer: 0,
             explanation: "Un estudio ex vivo debe llevarse a cabo dentro de las 72 horas.",
             type: "single",
         },
@@ -615,7 +615,7 @@ export const odontoTotal: QuizCategory = {
                 "Investigación de comportamientos humanos.",
                 "Describir distribución de enfermedades"
             ],
-            correctAnswer: 2,
+            correctAnswer: 1,
             explanation: "Describir distribución de enfermedades.",
             type: "single",
         },
@@ -781,7 +781,7 @@ export const odontoTotal: QuizCategory = {
                 "Un estudio investigativo, donde se analiza y se recopila datos antiguos.",
                 "Obra de cierta extensión en que se expone y analiza una cuestión determinada"
             ],
-            correctAnswer: 0,
+            correctAnswer: 1,
             explanation: "Revisión de registros para analizar eventos pasados.",
             type: "single",
         },
@@ -865,7 +865,7 @@ export const odontoTotal: QuizCategory = {
                 "Validación de tratamientos",
                 "Probar terapias innovadoras"
             ],
-            correctAnswer: 1,
+            correctAnswer: 0,
             explanation: "Validación de tratamientos.",
             type: "single",
         },
@@ -913,7 +913,7 @@ export const odontoTotal: QuizCategory = {
                 "Cooperación",
                 "Integridad."
             ],
-            correctAnswer: 1,
+            correctAnswer: 2,
             explanation: "Cooperación.",
             type: "single",
         },
@@ -1141,7 +1141,7 @@ export const odontoTotal: QuizCategory = {
                 "Cualquier material biológico de origen humano susceptible de conservación.",
                 "Decisión de participar en una investigación adoptada libre y voluntariamente por una persona"
             ],
-            correctAnswer: 2,
+            correctAnswer: 1,
             explanation: "Cualquier material biológico de origen humano susceptible de conservación.",
             type: "single",
         },

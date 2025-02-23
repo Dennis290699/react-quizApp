@@ -24,6 +24,7 @@ export const odontoPart3: QuizCategory = {
             question: "Verdadero o falso. Los integrantes del CEISH-UCE antes de iniciar sus funciones suscribirán una declaración escrita en la que conste que aceptan participar y en caso de presentarse, estos deberán ausentarse de las sesiones en las que pudiese anticipar un conflicto de interés.",
             options: [
                 "Verdadero",
+                "Falso"
             ],
             correctAnswer: 0,
             explanation: "Verdadero.",
@@ -61,7 +62,7 @@ export const odontoPart3: QuizCategory = {
                 "Un estudio investigativo, donde se analiza y se recopila datos antiguos.",
                 "Obra de cierta extensión en que se expone y analiza una cuestión determinada"
             ],
-            correctAnswer: 0,
+            correctAnswer: 1,
             explanation: "Revisión de registros para analizar eventos pasados.",
             type: "single",
         },
@@ -145,7 +146,7 @@ export const odontoPart3: QuizCategory = {
                 "Validación de tratamientos",
                 "Probar terapias innovadoras"
             ],
-            correctAnswer: 1,
+            correctAnswer: 0,
             explanation: "Validación de tratamientos.",
             type: "single",
         },
@@ -193,7 +194,7 @@ export const odontoPart3: QuizCategory = {
                 "Cooperación",
                 "Integridad."
             ],
-            correctAnswer: 1,
+            correctAnswer: 2,
             explanation: "Cooperación.",
             type: "single",
         },
