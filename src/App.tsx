@@ -18,7 +18,6 @@ function App() {
           </Routes>
         </AnimatePresence>
         <ThemeToggle />
-        <ChristmasEffect />
       </div>
     </Router>
   );
