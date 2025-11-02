@@ -16,3 +16,12 @@ export interface QuizCategory {
   color: string;
   questions: QuizQuestion[];
 }
+
+export interface Subject {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  categories: QuizCategory[];
+}

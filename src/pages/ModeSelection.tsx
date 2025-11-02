@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { categories } from '../data/categories';
-import { PreLoader } from '../components/PreLoader'; // Importa el PreLoader
+import { subjects } from '../data/subjects';
+import { PreLoader } from '../components/PreLoader';
 
 export const ModeSelection = () => {
-  const [isLoading, setIsLoading] = useState(false); // Estado de carga
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { categoryId } = useParams();
-  const category = categories.find((c) => c.id === categoryId);
+  const { subjectId, categoryId } = useParams();
+  const subject = subjects.find((s) => s.id === subjectId);
+  const category = subject?.categories.find((c) => c.id === categoryId);
 
-  if (!category) {
+  if (!subject || !category) {
     navigate('/');
     return null;
   }
@@ -34,10 +35,10 @@ export const ModeSelection = () => {
   ];
 
   const handleModeSelection = (modeId: string) => {
-    setIsLoading(true); // Mostrar el PreLoader
+    setIsLoading(true);
     setTimeout(() => {
-      navigate(`/quiz/${category.id}/${modeId}`);
-    }, 1500); // Tiempo de carga simulado de 1.5 segundos
+      navigate(`/quiz/${subjectId}/${category.id}/${modeId}`);
+    }, 1500);
   };
 
   return (
@@ -53,11 +54,11 @@ export const ModeSelection = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/')}
+          onClick={() => navigate(`/subject/${subjectId}`)}
           className="mb-8 inline-flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to Categories
+          Volver a Categorías
         </motion.button>
 
         <div className="text-center mb-12">

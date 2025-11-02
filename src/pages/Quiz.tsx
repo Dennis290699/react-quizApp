@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { categories } from '../data/categories';
+import { subjects } from '../data/subjects';
 import { useQuizStore } from '../store/quizStore';
 import { PreLoader } from '../components/PreLoader';
 import { QuizQuestion } from '../components/QuizQuestion';
 import { QuizResults } from '../components/QuizResults';
 
 export const Quiz = () => {
-  const { categoryId, mode } = useParams();
+  const { subjectId, categoryId, mode } = useParams();
   const { initializeQuiz, isComplete, questions } = useQuizStore();
-  const category = categories.find((c) => c.id === categoryId);
+  const subject = subjects.find((s) => s.id === subjectId);
+  const category = subject?.categories.find((c) => c.id === categoryId);
 
   useEffect(() => {
     if (category) {
