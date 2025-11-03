@@ -1,4 +1,4 @@
-import { QuizCategory } from '../types/quiz';
+import { QuizCategory } from '../../types/quiz';
 
 export const chapter5Questions: QuizCategory = {
     id: 'ethernet',

@@ -4,7 +4,7 @@ import { QuizQuestion } from '../types/quiz';
 interface QuizState {
   currentQuestion: number;
   score: number;
-  answers: (number | number[])[];
+  answers: (number | number[] | Record<number, string>)[];
   mode: 'practice' | 'exam';
   questions: QuizQuestion[];
   originalQuestions: QuizQuestion[];
@@ -13,7 +13,7 @@ interface QuizState {
 
 interface QuizStore extends QuizState {
   initializeQuiz: (questions: QuizQuestion[], mode: 'practice' | 'exam') => void;
-  answerQuestion: (answerIndex: number | number[]) => void;
+  answerQuestion: (answerIndex: number | number[] | Record<number, string>) => void;
   nextQuestion: () => void;
   resetQuiz: () => void;
   clearAnswers: () => void;
@@ -62,7 +62,18 @@ export const useQuizStore = create<QuizStore>((set) => ({
         const correctAnswers = question.correctAnswer as number[];
         isCorrect = correctAnswers.every((answer) => answerIndex.includes(answer)) &&
                     correctAnswers.length === answerIndex.length;
-      } else if (typeof answerIndex === 'number') {
+      } 
+      else if (question.type === 'matching' && typeof answerIndex === 'object' && !Array.isArray(answerIndex)) {
+        // Comparación simple de objetos: claves y valores deben coincidir
+        const correctAnswers = question.correctAnswer as Record<number, string>;
+        const userAnswers = answerIndex as Record<number, string>;
+        const keysCorrect = Object.keys(correctAnswers);
+        const keysUser = Object.keys(userAnswers);
+
+        isCorrect = keysCorrect.length === keysUser.length &&
+                    keysCorrect.every((key) => correctAnswers[Number(key)] === userAnswers[Number(key)]);
+      } 
+      else if (typeof answerIndex === 'number') {
         isCorrect = question.correctAnswer === answerIndex;
       }
 

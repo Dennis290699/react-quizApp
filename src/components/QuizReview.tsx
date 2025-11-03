@@ -9,6 +9,18 @@ interface QuizReviewProps {
 export const QuizReview = ({ onFinish }: QuizReviewProps) => {
   const { questions, answers } = useQuizStore();
 
+  const isRecordMapping = (v: unknown): v is Record<number, string> =>
+    !!v && typeof v === 'object' && !Array.isArray(v);
+
+  const isNumberArray = (v: unknown): v is number[] => Array.isArray(v) && v.every((x) => typeof x === 'number');
+
+  const isMatchingEqual = (a: Record<number, string>, b: Record<number, string>) => {
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    if (keysA.length !== keysB.length) return false;
+    return keysA.every((k) => a[Number(k)] === b[Number(k)]);
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -26,16 +38,25 @@ export const QuizReview = ({ onFinish }: QuizReviewProps) => {
       
       <AnimatePresence>
         {questions.map((question, index) => {
-          const isMultipleChoice = question.type === 'multiple';
           const userAnswer = answers[index];
           const correctAnswer = question.correctAnswer;
 
-          const isCorrect = isMultipleChoice
-            ? Array.isArray(userAnswer) && 
-              Array.isArray(correctAnswer) &&
-              userAnswer.length === correctAnswer.length &&
-              userAnswer.every((ans) => correctAnswer.includes(ans))
-            : userAnswer === correctAnswer;
+          let isCorrect = false;
+
+          if (question.type === 'multiple') {
+            isCorrect = isNumberArray(userAnswer) &&
+                        isNumberArray(correctAnswer) &&
+                        userAnswer.length === correctAnswer.length &&
+                        userAnswer.every((ans) => correctAnswer.includes(ans));
+          } else if (question.type === 'matching') {
+            if (isRecordMapping(userAnswer) && isRecordMapping(correctAnswer)) {
+              isCorrect = isMatchingEqual(userAnswer, correctAnswer);
+            } else {
+              isCorrect = false;
+            }
+          } else {
+            isCorrect = userAnswer === correctAnswer;
+          }
 
           return (
             <motion.div
@@ -64,56 +85,69 @@ export const QuizReview = ({ onFinish }: QuizReviewProps) => {
                 </motion.span>
               </div>
 
-              <div className="mt-4 space-y-3">
-                {question.options.map((option, optionIndex) => {
-                  const isOptionCorrect = Array.isArray(correctAnswer)
-                    ? correctAnswer.includes(optionIndex)
-                    : optionIndex === correctAnswer;
+              {/* 🔹 Mostrar tipo matching de forma diferente */}
+              {question.type === 'matching' ? (
+                <div className="mt-4 space-y-3">
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      Tus respuestas:
+                    </p>
+                    {Object.entries(isRecordMapping(userAnswer) ? userAnswer : {}).map(([num, letter]) => (
+                      <p key={num} className="text-gray-700 dark:text-gray-300">
+                        {num} → {letter}
+                      </p>
+                    ))}
+                  </div>
 
-                  const isOptionSelected = Array.isArray(userAnswer)
-                    ? userAnswer.includes(optionIndex)
-                    : userAnswer === optionIndex;
+                  <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-lg">
+                    <p className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                      Respuesta correcta:
+                    </p>
+                    {Object.entries(isRecordMapping(correctAnswer) ? correctAnswer : {}).map(([num, letter]) => (
+                      <p key={num} className="text-green-700 dark:text-green-300">
+                        {num} → {letter}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                // 🔸 Render clásico para single/multiple
+                <div className="mt-4 space-y-3">
+                  {question.options.map((option, optionIndex) => {
+                    const isOptionCorrect = Array.isArray(correctAnswer)
+                      ? (correctAnswer as number[]).includes(optionIndex)
+                      : optionIndex === (correctAnswer as number);
 
-                  let optionClass = 'p-4 rounded-lg transition-all duration-300 ';
-                  
-                  if (isOptionSelected && isOptionCorrect) {
-                    optionClass += 'bg-green-100 dark:bg-green-900/50 border-2 border-green-500 dark:border-green-400';
-                  } else if (isOptionSelected && !isOptionCorrect) {
-                    optionClass += 'bg-red-100 dark:bg-red-900/50 border-2 border-red-500 dark:border-red-400';
-                  } else if (isOptionCorrect) {
-                    optionClass += 'bg-green-50 dark:bg-green-900/30 border-2 border-green-500 dark:border-green-400';
-                  } else {
-                    optionClass += 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600';
-                  }
+                    const isOptionSelected = Array.isArray(userAnswer)
+                      ? (userAnswer as number[]).includes(optionIndex)
+                      : userAnswer === optionIndex;
 
-                  return (
-                    <motion.div
-                      key={optionIndex}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1 + optionIndex * 0.05 }}
-                      className={optionClass}
-                    >
-                      <span className="text-gray-900 dark:text-gray-100">{option}</span>
-                      {isOptionSelected && isOptionCorrect && (
-                        <span className="ml-2 text-green-600 dark:text-green-400 text-sm font-medium">
-                          (Your Correct Answer)
-                        </span>
-                      )}
-                      {isOptionSelected && !isOptionCorrect && (
-                        <span className="ml-2 text-red-600 dark:text-red-400 text-sm font-medium">
-                          (Your Incorrect Answer)
-                        </span>
-                      )}
-                      {!isOptionSelected && isOptionCorrect && (
-                        <span className="ml-2 text-green-600 dark:text-green-400 text-sm font-medium">
-                          (Correct Answer)
-                        </span>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
+                    let optionClass = 'p-4 rounded-lg transition-all duration-300 ';
+                    
+                    if (isOptionSelected && isOptionCorrect) {
+                      optionClass += 'bg-green-100 dark:bg-green-900/50 border-2 border-green-500 dark:border-green-400';
+                    } else if (isOptionSelected && !isOptionCorrect) {
+                      optionClass += 'bg-red-100 dark:bg-red-900/50 border-2 border-red-500 dark:border-red-400';
+                    } else if (isOptionCorrect) {
+                      optionClass += 'bg-green-50 dark:bg-green-900/30 border-2 border-green-500 dark:border-green-400';
+                    } else {
+                      optionClass += 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600';
+                    }
+
+                    return (
+                      <motion.div
+                        key={optionIndex}
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.1 + optionIndex * 0.05 }}
+                        className={optionClass}
+                      >
+                        <span className="text-gray-900 dark:text-gray-100">{option}</span>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
 
               {question.explanation && (
                 <motion.div 

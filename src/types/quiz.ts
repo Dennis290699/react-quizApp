@@ -2,10 +2,10 @@ export interface QuizQuestion {
   id: string;
   question: string;
   options: string[];
-  correctAnswer: number | number[]; // Permite tanto un solo índice como un array
+  correctAnswer: number | number[] | Record<number, string>; 
   explanation: string;
   image?: string;
-  type: 'multiple' | 'single';
+  type: 'multiple' | 'single' | 'matching';
 }
 
 export interface QuizCategory {
