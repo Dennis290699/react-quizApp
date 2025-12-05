@@ -5,6 +5,7 @@ import { SubjectCategories } from './pages/SubjectCategories';
 import { ModeSelection } from './pages/ModeSelection';
 import { Quiz } from './pages/Quiz';
 import { ThemeToggle } from './components/ThemeToggle';
+import { ChristmasEffect } from './components/ChristmasEffect';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </Routes>
         </AnimatePresence>
         <ThemeToggle />
+        <ChristmasEffect />
       </div>
     </Router>
   );
